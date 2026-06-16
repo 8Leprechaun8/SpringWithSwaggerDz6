@@ -1,0 +1,20 @@
+# Запуск: docker-compose up -d
+services:
+  database:
+    image: postgres:17.7
+    container_name: database
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - spring-postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+volumes:
+  db-data:
+networks:
+  spring-postgres:
