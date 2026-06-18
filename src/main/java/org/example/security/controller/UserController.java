@@ -55,7 +55,7 @@ public class UserController {
             @ApiResponse(responseCode = "500", description = "Неудача - пользователь с похожим id уже существует в системе")
     })
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping("/read/{id}")
+    @GetMapping("/read/{id}")
     public UserDtoResponse readUser(@Parameter(description = "id", example = "3d299682-5c24-4442-ad8a-732701a930d7")
                                         @PathVariable(name = "id") UUID id) throws UserNotFoundException {
         UserDtoResponse response = userDetailsManager.readUser(id);
@@ -70,7 +70,7 @@ public class UserController {
             @ApiResponse(responseCode = "500", description = "Неудача - пользователя не существует в системе")
     })
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping("/update")
+    @PutMapping("/update")
     public void updateUser(@RequestBody UserDtoForUpdating userDto) throws UserNotFoundException {
         UserDetailsAdditional userDetails = userMapper.userDtoForUpdatingToUserDetailsAdditional(userDto);
         userDetailsManager.updateUser(userDetails);
@@ -82,7 +82,7 @@ public class UserController {
             @ApiResponse(responseCode = "500", description = "Неудача - пользователя с похожим id не существует в системе")
     })
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteUser(@Parameter(description = "id", example = "3d299682-5c24-4442-ad8a-732701a930d7")
                                @PathVariable(name = "id") UUID id) throws UserNotFoundException {
         userDetailsManager.deleteUser(id);
@@ -93,7 +93,7 @@ public class UserController {
             @ApiResponse(responseCode = "200", description = "Успешное получение списка всех пользователей")
     })
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping("/readAll")
+    @GetMapping("/readAll")
     public List<UserDtoResponse> readAllUsers() throws UserNotFoundException {
         List<UserDtoResponse> responseList = userDetailsManager.findAll();
         for (UserDtoResponse response : responseList) {
